@@ -1,0 +1,30 @@
+{
+  "name": "eftekhar-kabir-git-server",
+  "version": "1.0.0",
+  "description": "100% working Express server for Eftekhar-kabir-git repo. Deploy-ready on Vercel, Render, Railway.",
+  "main": "vercel.js",
+  "private": true,
+  "scripts": {
+    "start": "node vercel.js",
+    "dev": "nodemon vercel.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "keywords": [
+    "express",
+    "vercel",
+    "render",
+    "server",
+    "bot",
+    "api"
+  ],
+  "author": "EFTEKHAR KABIR⚡",
+  "license": "MIT"
+}
