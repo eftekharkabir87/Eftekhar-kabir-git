@@ -1,41 +1,33 @@
 /**
- * 100% Working Express Server
- * Deploy on Vercel / Render / Railway
+ * 100% Stable Vercel/Render Server
  * Author: EFTEKHAR KABIR⚡
  */
 
 const express = require("express");
 const app = express();
 
-// Parse JSON + URL encoded
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Root route (works everywhere)
+// Root route
 app.get("/", (req, res) => {
   res.json({
     success: true,
-    message: "Server is running 🚀",
-    platform: "Vercel / Render / Railway",
+    message: "Server is running perfectly 🚀",
     author: "EFTEKHAR KABIR⚡",
+    platform: "Vercel / Render / Railway"
   });
 });
 
-// A simple test route
-app.get("/hello", (req, res) => {
-  res.send("Hello from Express!");
-});
-
-// Health check (optional)
+// Health check route (important for Render)
 app.get("/health", (req, res) => {
   res.send("OK");
 });
 
-// Listen (Render/Railway use PORT)
+// PORT
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
 
-// Vercel export
+// Export module for Vercel
 module.exports = app;
