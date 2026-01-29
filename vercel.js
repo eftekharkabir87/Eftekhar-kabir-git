@@ -1,37 +1,36 @@
 /**
- * Eftekhar Kabir Profile Page
+ * Eftekhar Kabir Profile Server
  * Render + Vercel compatible
- * All-in-one merged server
  */
 
 const express = require("express");
 const path = require("path");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// ✅ Serve static files from public folder
+// Serve static files
 app.use(express.static(path.join(__dirname, "public")));
 
-// ✅ Home route
+// Root route
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// ✅ Optional: health check
+// Health check (optional)
 app.get("/health", (req, res) => res.send("OK"));
 
-// ✅ Fallback for unknown routes
+// 404 fallback
 app.use((req, res) => {
   res.status(404).send("404 | Page Not Found");
 });
 
-// ✅ Only listen on Render, Vercel handles serverless automatically
+// Only listen on Render
 if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
-    console.log("Server running on port", PORT);
+    console.log("✅ Server running on port", PORT);
   });
 }
 
-// ✅ Export app for Vercel
+// Export for Vercel
 module.exports = app;
