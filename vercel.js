@@ -1,35 +1,37 @@
 /**
- * Universal HTML Server
+ * Eftekhar Kabir Profile Page
  * Render + Vercel compatible
- * Author: EFTEKHAR KABIR⚡
+ * All-in-one merged server
  */
 
 const express = require("express");
 const path = require("path");
-const app = express();
 
-// Serve static HTML
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// ✅ Serve static files from public folder
 app.use(express.static(path.join(__dirname, "public")));
 
+// ✅ Home route
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Health check (Render safe)
-app.get("/health", (req, res) => {
-  res.status(200).send("OK");
+// ✅ Optional: health check
+app.get("/health", (req, res) => res.send("OK"));
+
+// ✅ Fallback for unknown routes
+app.use((req, res) => {
+  res.status(404).send("404 | Page Not Found");
 });
 
-/**
- * 🔴 IMPORTANT PART
- * Only listen when NOT on Vercel
- */
+// ✅ Only listen on Render, Vercel handles serverless automatically
 if (!process.env.VERCEL) {
-  const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
-    console.log("✅ Server running on port " + PORT);
+    console.log("Server running on port", PORT);
   });
 }
 
-// ✅ Required for Vercel
+// ✅ Export app for Vercel
 module.exports = app;
