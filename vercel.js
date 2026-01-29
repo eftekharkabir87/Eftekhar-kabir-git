@@ -1,7 +1,6 @@
 /**
- * Render-first static HTML server
- * Works on Render / Vercel
- * Shows ONLY your HTML
+ * Universal HTML Server
+ * Render + Vercel compatible
  * Author: EFTEKHAR KABIR⚡
  */
 
@@ -9,24 +8,28 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
-// Serve static files (HTML, CSS, JS, media)
+// Serve static HTML
 app.use(express.static(path.join(__dirname, "public")));
 
-// Root → show your HTML
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Health check (Render needs this)
+// Health check (Render safe)
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
 });
 
-// Required PORT handling
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("✅ HTML server running on port " + PORT);
-});
+/**
+ * 🔴 IMPORTANT PART
+ * Only listen when NOT on Vercel
+ */
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log("✅ Server running on port " + PORT);
+  });
+}
 
-// Export for Vercel
+// ✅ Required for Vercel
 module.exports = app;
